@@ -1,0 +1,14 @@
+# 敏感文件
+.env
+config.yaml
+*.pem
+*.key
+*.secret
+
+# 备份文件
+*.tar.gz
+*.zip
+
+# 临时文件
+.cache/
+*.log
