@@ -1,0 +1,29 @@
+services:
+  hermes:
+    image: ys9898/hermes-agent:latest
+    container_name: hermes
+    restart: unless-stopped
+    command: ["gateway", "run"]
+    volumes:
+      - ./data:/opt/data
+      - ./workspace:/root/workspace
+    env_file:
+      - ./data/.env
+    stdin_open: true
+    tty: true
+    network_mode: host
+
+  dashboard:
+    image: ys9898/hermes-agent:latest
+    container_name: hermes-dashboard
+    restart: unless-stopped
+    command: ["dashboard", "--host", "0.0.0.0", "--port", "9119", "--no-open"]
+    volumes:
+      - ./data:/opt/data
+    environment:
+      - GATEWAY_HEALTH_URL=http://127.0.0.1:8642
+    depends_on:
+      - hermes
+    stdin_open: true
+    tty: true
+    network_mode: host
